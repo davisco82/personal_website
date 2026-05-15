@@ -1,0 +1,9 @@
+services:
+  personal_web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: personal_web
+    restart: unless-stopped
+    ports:
+      - "3005:80"
