@@ -1,8 +1,29 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("posts");
+
+const publishedPosts = posts
+  .filter((post) => !post.data.draft)
+  .sort(
+    (a, b) =>
+      b.data.pubDate.getTime() - a.data.pubDate.getTime()
+  );
 ---
 
-<BaseLayout title="Projects | Davisco.dev">
-  <h1>Projects</h1>
-  <p>Production apps, experiments and long-term projects.</p>
+<BaseLayout title="Posts | Davisco.dev">
+  <h1>Posts</h1>
+
+  <ul>
+    {publishedPosts.map((post) => (
+      <li>
+        <a href={`/posts/${post.id}`}>
+          {post.data.title}
+        </a>
+
+        <p>{post.data.description}</p>
+      </li>
+    ))}
+  </ul>
 </BaseLayout>
