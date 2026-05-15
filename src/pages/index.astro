@@ -1,0 +1,51 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Davisco.dev">
+  <section class="grid gap-10 py-16 md:grid-cols-[1.3fr_0.7fr] md:items-center">
+    <div>
+      <p class="mb-4 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
+        Personal hub / Devlog / Projects
+      </p>
+
+      <h1 class="max-w-3xl text-5xl font-bold tracking-tight text-white md:text-7xl">
+        Building games, tools and self-hosted production systems.
+      </h1>
+
+      <p class="mt-6 max-w-2xl text-lg leading-8 text-zinc-400">
+        I build football simulations, web apps, AI experiments and Docker-based
+        infrastructure running on my own VPS.
+      </p>
+
+      <div class="mt-8 flex flex-wrap gap-4">
+        <a
+          href="/projects"
+          class="rounded-xl bg-cyan-400 px-5 py-3 font-semibold text-zinc-950 hover:bg-cyan-300 hover:text-zinc-950"
+        >
+          View projects
+        </a>
+
+        <a
+          href="/posts"
+          class="rounded-xl border border-zinc-700 px-5 py-3 font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white"
+        >
+          Read devlog
+        </a>
+      </div>
+    </div>
+
+    <aside class="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 shadow-2xl">
+      <h2 class="text-sm font-semibold uppercase tracking-[0.25em] text-zinc-500">
+        Currently
+      </h2>
+
+      <ul class="mt-5 space-y-4 text-zinc-300">
+        <li>→ Football Legacy 2026</li>
+        <li>→ Real World Hero</li>
+        <li>→ Personal website</li>
+        <li>→ Coolify production stack</li>
+      </ul>
+    </aside>
+  </section>
+</BaseLayout>

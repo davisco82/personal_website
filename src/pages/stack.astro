@@ -1,0 +1,68 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import StackCard from "../components/StackCard.astro";
+---
+
+<BaseLayout title="Stack | Davisco.dev">
+  <section>
+    <p class="mb-4 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
+      Infrastructure
+    </p>
+
+    <h1 class="text-4xl font-bold text-white md:text-6xl">
+      Self-hosted production stack.
+    </h1>
+
+    <p class="mt-5 max-w-2xl text-lg leading-8 text-zinc-400">
+      My personal infrastructure is built around Docker, Coolify, Cloudflare
+      and a Hetzner VPS. Each app is isolated, deployed from GitHub and routed
+      through Traefik.
+    </p>
+  </section>
+
+  <section class="mt-12 grid gap-6 md:grid-cols-2">
+    <StackCard
+      title="Hosting"
+      description="Production apps run on a Hetzner VPS with Docker-based deployments."
+      items={[
+        "Hetzner Cloud VPS",
+        "Ubuntu Linux Server",
+        "Docker",
+        "Docker Compose",
+      ]}
+    />
+
+    <StackCard
+      title="Deployment"
+      description="Applications are deployed through Coolify using GitHub App integration."
+      items={[
+        "Coolify Project: Production",
+        "GitHub App integration",
+        "Automatic deployments",
+        "Force rebuild without cache when needed",
+      ]}
+    />
+
+    <StackCard
+      title="Routing & SSL"
+      description="Traffic is routed by Traefik and DNS/SSL is managed through Cloudflare."
+      items={[
+        "Cloudflare DNS",
+        "Cloudflare SSL proxy",
+        "Traefik routing",
+        "Automatic HTTPS",
+      ]}
+    />
+
+    <StackCard
+      title="Production Rules"
+      description="Each application follows a clean production-first Docker setup."
+      items={[
+        "Prefer PostgreSQL over SQLite",
+        "Use production compose files",
+        "Avoid development bind mounts",
+        "Use .dockerignore",
+      ]}
+    />
+  </section>
+</BaseLayout>
