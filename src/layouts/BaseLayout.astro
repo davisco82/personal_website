@@ -1,16 +1,20 @@
 ---
 import "../styles/global.css";
 
-const { title = "Davisco.dev" } = Astro.props;
+const {
+  title = "Davisco.dev",
+  description = "Personal website, projects, devlog and experiments.",
+} = Astro.props;
 ---
 
 <html lang="cs">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
     <title>{title}</title>
   </head>
-
+  
   <body>
     <div class="min-h-screen">
       <header class="border-b border-zinc-800">
