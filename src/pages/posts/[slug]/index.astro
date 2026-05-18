@@ -21,6 +21,16 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 
 const { Content } = await render(post);
+const formatDate = (date: Date) =>
+  date.toLocaleDateString("cs-CZ", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+const getReadingTime = (content: string) => {
+  const words = content.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.ceil(words / 200));
+};
 ---
 
 <BaseLayout
@@ -28,11 +38,36 @@ const { Content } = await render(post);
   description={post.data.description}
   ogType="article"
 >
-  <article>
-    <h1>{post.data.title}</h1>
+  <article class="mx-auto max-w-3xl">
+    <a
+      href="/posts"
+      class="inline-block rounded-lg border border-zinc-700 px-3 py-2 text-sm font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white"
+    >
+      Back to Posts
+    </a>
 
-    <p>{post.data.description}</p>
+    <p class="mt-6 text-sm text-zinc-500">
+      {formatDate(post.data.pubDate)} • {getReadingTime(post.body)} min read
+    </p>
 
-    <Content />
+    <h1 class="mt-3 text-4xl font-bold text-white md:text-5xl">
+      {post.data.title}
+    </h1>
+
+    <p class="mt-4 text-xl leading-8 text-zinc-400">{post.data.description}</p>
+
+    {post.data.tags && (
+      <ul class="mt-5 flex flex-wrap gap-2">
+        {post.data.tags.map((tag) => (
+          <li class="rounded-full border border-zinc-700 px-3 py-1 text-xs text-zinc-300">
+            {tag}
+          </li>
+        ))}
+      </ul>
+    )}
+
+    <div class="prose prose-invert mt-10 max-w-none prose-headings:text-white prose-p:text-zinc-300 prose-a:text-cyan-300">
+      <Content />
+    </div>
   </article>
 </BaseLayout>

@@ -14,7 +14,7 @@ links:
   - label: "Music Packs"
     href: "/downloads"
   - label: "Lab Detail"
-    href: "/labs/davisco-music-lab"
+    href: "/music/davisco-music-lab"
 ---
 
 Current focus:
