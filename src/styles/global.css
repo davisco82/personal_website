@@ -13,5 +13,5 @@ body {
 }
 
 a {
-  @apply text-cyan-400 hover:text-cyan-300 transition;
+  @apply transition;
 }
