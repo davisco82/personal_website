@@ -23,7 +23,11 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<BaseLayout title={`${post.data.title} | DaVisco Entertainment`}>
+<BaseLayout
+  title={`${post.data.title} | DaVisco Entertainment`}
+  description={post.data.description}
+  ogType="article"
+>
   <article>
     <h1>{post.data.title}</h1>
 

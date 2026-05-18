@@ -1,59 +1,18 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
 
-const musicPacks = [
-  {
-    title: "Modern Action Background - Vol. 01",
-    href: "https://davisco82.gumroad.com/l/modern_action",
-  },
-  {
-    title: "Emotional Cinematic Underscore - Vol. 01",
-    href: "https://davisco82.gumroad.com/l/emotional_cinematic",
-  },
-  {
-    title: "Neutral Ambient Background - Vol. 01",
-    href: "https://davisco82.gumroad.com/l/neutral_ambient",
-  },
-  {
-    title: "Light Cinematic Tension Underscore - Vol. 01",
-    href: "https://davisco82.gumroad.com/l/light_tension",
-  },
-  {
-    title: "Calm Tech Background - Vol. 01",
-    href: "https://davisco82.gumroad.com/l/calm_tech",
-  },
-  {
-    title: "Dark Tension Underscore - Vol. 01",
-    href: "https://davisco82.gumroad.com/l/dark_tension",
-  },
-  {
-    title: "Minimal Tech Background Music - Vol. 01",
-    href: "https://davisco82.gumroad.com/l/minimal_tech",
-  },
-  {
-    title: "Modern Percussion Underscore - Vol. 01",
-    href: "https://davisco82.gumroad.com/l/modern_percussion",
-  },
-  {
-    title: "Cinematic Light Documentary Background Music - Vol. 01",
-    href: "https://davisco82.gumroad.com/l/cinematic_light",
-  },
-  {
-    title: "Focus Piano Background Music - Vol. 01",
-    href: "https://davisco82.gumroad.com/l/focus_piano",
-  },
-  {
-    title: "Energy Motion Underscore - Vol. 01",
-    href: "https://davisco82.gumroad.com/l/energy_underscore",
-  },
-  {
-    title: "Atmospheric Background Music - Vol. 01",
-    href: "https://davisco82.gumroad.com/l/atmo_background",
-  },
-];
+const downloadItems = (await getCollection("downloads")).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const tools = downloadItems.filter((item) => item.data.kind === "tool");
+const musicPacks = downloadItems.filter((item) => item.data.kind === "music-pack");
 ---
 
-<BaseLayout title="Downloads | DaVisco Entertainment">
+<BaseLayout
+  title="Downloads | DaVisco Entertainment"
+  description="Downloadable dev tools and background music packs from DaVisco Entertainment."
+>
   <section>
     <p class="mb-4 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
       Downloads
@@ -70,37 +29,24 @@ const musicPacks = [
   <section class="mt-12">
     <h2 class="text-2xl font-semibold text-white">Developer Tools</h2>
     <div class="mt-5 grid gap-5 md:grid-cols-2">
-      <article class="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6">
-        <p class="text-xs uppercase tracking-[0.25em] text-cyan-400">Tool</p>
-        <h3 class="mt-2 text-xl font-semibold text-white">Match Sim Sandbox</h3>
-        <p class="mt-3 text-zinc-400">
-          Lightweight simulation helper for football balancing tests and scenario
-          replay.
-        </p>
-        <p class="mt-3 text-sm text-zinc-500">Format: ZIP • Version: v0.1</p>
-        <a
-          href="#"
-          class="mt-5 inline-block rounded-lg border border-zinc-700 px-4 py-2 text-sm font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white"
-        >
-          Download
-        </a>
-      </article>
-
-      <article class="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6">
-        <p class="text-xs uppercase tracking-[0.25em] text-cyan-400">Tool</p>
-        <h3 class="mt-2 text-xl font-semibold text-white">Prompt QA Runner</h3>
-        <p class="mt-3 text-zinc-400">
-          Internal testing utility for prompt regression checks and output
-          consistency.
-        </p>
-        <p class="mt-3 text-sm text-zinc-500">Format: ZIP • Version: v0.1</p>
-        <a
-          href="#"
-          class="mt-5 inline-block rounded-lg border border-zinc-700 px-4 py-2 text-sm font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white"
-        >
-          Download
-        </a>
-      </article>
+      {tools.map((tool) => (
+        <article class="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6">
+          <p class="text-xs uppercase tracking-[0.25em] text-cyan-400">Tool</p>
+          <h3 class="mt-2 text-xl font-semibold text-white">{tool.data.title}</h3>
+          <p class="mt-3 text-zinc-400">{tool.data.description}</p>
+          <p class="mt-3 text-sm text-zinc-500">
+            {tool.data.format}{tool.data.version ? ` • Version: ${tool.data.version}` : ""}
+          </p>
+          <a
+            href={tool.data.href}
+            target={tool.data.external ? "_blank" : undefined}
+            rel={tool.data.external ? "noreferrer" : undefined}
+            class="mt-5 inline-block rounded-lg border border-zinc-700 px-4 py-2 text-sm font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white"
+          >
+            {tool.data.ctaLabel}
+          </a>
+        </article>
+      ))}
     </div>
   </section>
 
@@ -117,7 +63,7 @@ const musicPacks = [
       </a>
     </div>
     <p class="mt-3 max-w-3xl text-zinc-400">
-      12 packs prepared for video creators. Each pack includes two full-track
+      {musicPacks.length} packs prepared for video creators. Each pack includes two full-track
       previews in a YouTube playlist on DaVisco Background Lab.
     </p>
 
@@ -125,17 +71,17 @@ const musicPacks = [
       {musicPacks.map((pack) => (
         <article class="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6">
           <p class="text-xs uppercase tracking-[0.25em] text-cyan-400">Music Pack</p>
-          <h3 class="mt-2 text-xl font-semibold text-white">{pack.title}</h3>
+          <h3 class="mt-2 text-xl font-semibold text-white">{pack.data.title}</h3>
           <p class="mt-3 text-sm text-zinc-500">
-            Format: WAV/MP3 • Includes playlist preview
+            Format: {pack.data.format ?? "WAV/MP3"} • Includes playlist preview
           </p>
           <a
-            href={pack.href}
-            target="_blank"
-            rel="noreferrer"
+            href={pack.data.href}
+            target={pack.data.external ? "_blank" : undefined}
+            rel={pack.data.external ? "noreferrer" : undefined}
             class="mt-5 inline-block rounded-lg bg-cyan-400 px-4 py-2 text-sm font-semibold text-zinc-950 hover:bg-cyan-300 hover:text-zinc-950"
           >
-            Buy on Gumroad
+            {pack.data.ctaLabel}
           </a>
         </article>
       ))}

@@ -16,7 +16,11 @@ const { project } = Astro.props;
 const { Content } = await render(project);
 ---
 
-<BaseLayout title={project.data.title}>
+<BaseLayout
+  title={`${project.data.title} | DaVisco Entertainment`}
+  description={project.data.description}
+  ogType="article"
+>
   <article class="mx-auto max-w-4xl">
     <p class="text-sm uppercase tracking-[0.3em] text-cyan-400">
       {project.data.status}

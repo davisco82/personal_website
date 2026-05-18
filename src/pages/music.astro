@@ -1,8 +1,20 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const releases = (await getCollection("musicReleases")).sort(
+  (a, b) =>
+    (b.data.releaseDate?.getTime() ?? 0) -
+    (a.data.releaseDate?.getTime() ?? 0)
+);
+const mixes = releases.filter((item) => item.data.type === "mix");
+const tracks = releases.filter((item) => item.data.type === "track");
 ---
 
-<BaseLayout title="Music | DaVisco Entertainment">
+<BaseLayout
+  title="AI Music | DaVisco Entertainment"
+  description="DaVisco Music hub with AI music lab workflows, creator packs, mixes, and standalone tracks."
+>
   <section>
     <p class="mb-4 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
       AI Music
@@ -80,6 +92,50 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       >
         Open channel
       </a>
+    </article>
+  </section>
+
+  <section class="mt-12 grid gap-6 md:grid-cols-2">
+    <article class="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6">
+      <h3 class="text-2xl font-semibold text-white">Mixes</h3>
+      <ul class="mt-4 space-y-4">
+        {mixes.map((item) => (
+          <li class="rounded-xl border border-zinc-800 p-4">
+            <p class="text-sm text-zinc-500">{item.data.status}</p>
+            <p class="mt-1 text-lg font-semibold text-white">{item.data.title}</p>
+            <p class="mt-2 text-zinc-400">{item.data.description}</p>
+            <a
+              href={item.data.youtubeUrl}
+              target="_blank"
+              rel="noreferrer"
+              class="mt-3 inline-block text-sm font-semibold text-cyan-300 hover:text-cyan-200"
+            >
+              Open on YouTube
+            </a>
+          </li>
+        ))}
+      </ul>
+    </article>
+
+    <article class="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6">
+      <h3 class="text-2xl font-semibold text-white">Tracks</h3>
+      <ul class="mt-4 space-y-4">
+        {tracks.map((item) => (
+          <li class="rounded-xl border border-zinc-800 p-4">
+            <p class="text-sm text-zinc-500">{item.data.status}</p>
+            <p class="mt-1 text-lg font-semibold text-white">{item.data.title}</p>
+            <p class="mt-2 text-zinc-400">{item.data.description}</p>
+            <a
+              href={item.data.youtubeUrl}
+              target="_blank"
+              rel="noreferrer"
+              class="mt-3 inline-block text-sm font-semibold text-cyan-300 hover:text-cyan-200"
+            >
+              Open on YouTube
+            </a>
+          </li>
+        ))}
+      </ul>
     </article>
   </section>
 </BaseLayout>

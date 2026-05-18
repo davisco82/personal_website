@@ -4,7 +4,10 @@ import "../styles/global.css";
 const {
   title = "DaVisco Entertainment",
   description = "Personal website, projects, devlog and experiments.",
+  ogType = "website",
 } = Astro.props;
+
+const canonicalUrl = Astro.url;
 ---
 
 <html lang="cs">
@@ -12,6 +15,14 @@ const {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
     <title>{title}</title>
   </head>
   
