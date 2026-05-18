@@ -31,7 +31,17 @@ const labs = defineCollection({
     title: z.string(),
     description: z.string(),
     status: z.string(),
+    releaseDate: z.date().optional(),
     stack: z.array(z.string()).optional(),
+    links: z
+      .array(
+        z.object({
+          label: z.string(),
+          href: z.string(),
+          external: z.boolean().optional(),
+        })
+      )
+      .optional(),
   }),
 });
 

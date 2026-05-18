@@ -1,8 +1,72 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const labs = (await getCollection("labs")).sort(
+  (a, b) =>
+    (b.data.releaseDate?.getTime() ?? 0) -
+    (a.data.releaseDate?.getTime() ?? 0)
+);
 ---
 
-<BaseLayout title="Projects | Davisco.dev">
-  <h1>Projects</h1>
-  <p>Production apps, experiments and long-term projects.</p>
+<BaseLayout title="Labs | DaVisco Entertainment">
+  <section>
+    <p class="mb-4 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
+      Labs
+    </p>
+
+    <h1 class="text-4xl font-bold text-white md:text-6xl">
+      DaVisco Music Lab
+    </h1>
+
+    <p class="mt-5 max-w-2xl text-lg leading-8 text-zinc-400">
+      Experimental audio workflows, Suno generations, music packs and selected
+      tracks published on YouTube.
+    </p>
+  </section>
+
+  <section class="mt-12 grid gap-6 md:grid-cols-2">
+    {labs.map((lab) => (
+      <article class="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6">
+        <p class="text-xs uppercase tracking-[0.2em] text-cyan-400">
+          {lab.data.status}
+        </p>
+
+        <h2 class="mt-3 text-2xl font-semibold text-white">{lab.data.title}</h2>
+
+        <p class="mt-3 text-zinc-400">{lab.data.description}</p>
+
+        {lab.data.releaseDate && (
+          <p class="mt-3 text-sm text-zinc-500">
+            Released: {lab.data.releaseDate.toLocaleDateString("cs-CZ")}
+          </p>
+        )}
+
+        {lab.data.stack && (
+          <ul class="mt-4 flex flex-wrap gap-2">
+            {lab.data.stack.map((item) => (
+              <li class="rounded-full border border-zinc-700 px-3 py-1 text-xs text-zinc-300">
+                {item}
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {lab.data.links && (
+          <div class="mt-5 flex flex-wrap gap-3">
+            {lab.data.links.map((link) => (
+              <a
+                href={link.href}
+                target={link.external ? "_blank" : undefined}
+                rel={link.external ? "noreferrer" : undefined}
+                class="rounded-lg border border-zinc-700 px-3 py-2 text-sm text-zinc-200 transition hover:border-cyan-500 hover:text-cyan-300"
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+        )}
+      </article>
+    ))}
+  </section>
 </BaseLayout>

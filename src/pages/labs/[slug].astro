@@ -1,0 +1,67 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const labs = await getCollection("labs");
+
+  return labs.map((lab) => ({
+    params: { slug: lab.id },
+    props: { lab },
+  }));
+}
+
+const { lab } = Astro.props;
+const { Content } = await render(lab);
+---
+
+<BaseLayout title={`${lab.data.title} | DaVisco Entertainment`}>
+  <article class="mx-auto max-w-4xl">
+    <p class="text-sm uppercase tracking-[0.3em] text-cyan-400">
+      {lab.data.status}
+    </p>
+
+    <h1 class="mt-4 text-5xl font-bold text-white">
+      {lab.data.title}
+    </h1>
+
+    <p class="mt-6 text-xl leading-8 text-zinc-400">
+      {lab.data.description}
+    </p>
+
+    {lab.data.releaseDate && (
+      <p class="mt-4 text-sm text-zinc-500">
+        Released: {lab.data.releaseDate.toLocaleDateString("cs-CZ")}
+      </p>
+    )}
+
+    {lab.data.stack && (
+      <div class="mt-6 flex flex-wrap gap-2">
+        {lab.data.stack.map((item) => (
+          <span class="rounded-full bg-zinc-800 px-3 py-1 text-sm text-zinc-300">
+            {item}
+          </span>
+        ))}
+      </div>
+    )}
+
+    {lab.data.links && (
+      <div class="mt-8 flex flex-wrap gap-3">
+        {lab.data.links.map((link) => (
+          <a
+            href={link.href}
+            target={link.external ? "_blank" : undefined}
+            rel={link.external ? "noreferrer" : undefined}
+            class="rounded-lg border border-zinc-700 px-3 py-2 text-sm text-zinc-200 transition hover:border-cyan-500 hover:text-cyan-300"
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
+    )}
+
+    <div class="prose prose-invert mt-12 max-w-none">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

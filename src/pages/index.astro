@@ -2,50 +2,94 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title="Davisco.dev">
-  <section class="grid gap-10 py-16 md:grid-cols-[1.3fr_0.7fr] md:items-center">
-    <div>
-      <p class="mb-4 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
-        Personal hub / Devlog / Projects
+<BaseLayout title="DaVisco Entertainment">
+  <section class="py-16">
+    <p class="mb-4 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
+      DaVisco Entertainment
+    </p>
+
+    <h1 class="max-w-4xl text-5xl font-bold tracking-tight text-white md:text-7xl">
+      Two creative systems: development and AI music production.
+    </h1>
+
+    <p class="mt-6 max-w-3xl text-lg leading-8 text-zinc-400">
+      This site is split into two pillars. One is focused on software, games
+      and production-ready tools. The second is focused on AI-driven music,
+      including background packs, mixes and standalone tracks.
+    </p>
+  </section>
+
+  <section class="grid gap-6 pb-8 md:grid-cols-2">
+    <article class="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-7">
+      <p class="text-xs uppercase tracking-[0.25em] text-cyan-400">
+        Development
       </p>
 
-      <h1 class="max-w-3xl text-5xl font-bold tracking-tight text-white md:text-7xl">
-        Building games, tools and self-hosted production systems.
-      </h1>
-
-      <p class="mt-6 max-w-2xl text-lg leading-8 text-zinc-400">
-        I build football simulations, web apps, AI experiments and Docker-based
-        infrastructure running on my own VPS.
-      </p>
-
-      <div class="mt-8 flex flex-wrap gap-4">
-        <a
-          href="/projects"
-          class="rounded-xl bg-cyan-400 px-5 py-3 font-semibold text-zinc-950 hover:bg-cyan-300 hover:text-zinc-950"
-        >
-          View projects
-        </a>
-
-        <a
-          href="/posts"
-          class="rounded-xl border border-zinc-700 px-5 py-3 font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white"
-        >
-          Read devlog
-        </a>
-      </div>
-    </div>
-
-    <aside class="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 shadow-2xl">
-      <h2 class="text-sm font-semibold uppercase tracking-[0.25em] text-zinc-500">
-        Currently
+      <h2 class="mt-3 text-3xl font-bold text-white">
+        Apps, games and tested tools
       </h2>
 
-      <ul class="mt-5 space-y-4 text-zinc-300">
-        <li>→ Football Legacy 2026</li>
-        <li>→ Real World Hero</li>
-        <li>→ Personal website</li>
-        <li>→ Coolify production stack</li>
-      </ul>
-    </aside>
+      <p class="mt-4 text-zinc-400">
+        Test apps and games, finished tools available for download and the
+        infrastructure stack behind production work.
+      </p>
+
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a
+          href="/projects"
+          class="rounded-xl bg-cyan-400 px-4 py-2 font-semibold text-zinc-950 hover:bg-cyan-300 hover:text-zinc-950"
+        >
+          Projects
+        </a>
+        <a
+          href="/downloads"
+          class="rounded-xl border border-zinc-700 px-4 py-2 font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white"
+        >
+          Tools
+        </a>
+        <a
+          href="/stack"
+          class="rounded-xl border border-zinc-700 px-4 py-2 font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white"
+        >
+          Tech stack
+        </a>
+      </div>
+    </article>
+
+    <article class="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-7">
+      <p class="text-xs uppercase tracking-[0.25em] text-cyan-400">
+        AI Music
+      </p>
+
+      <h2 class="mt-3 text-3xl font-bold text-white">
+        DaVisco Music Lab
+      </h2>
+
+      <p class="mt-4 text-zinc-400">
+        AI music workflows in Suno, background packs for video creators, and
+        DaVisco Music split into mixes and standalone tracks.
+      </p>
+
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a
+          href="/music"
+          class="rounded-xl bg-cyan-400 px-4 py-2 font-semibold text-zinc-950 hover:bg-cyan-300 hover:text-zinc-950"
+        >
+          Music hub
+        </a>
+        <a
+          href="/downloads"
+          class="rounded-xl border border-zinc-700 px-4 py-2 font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white"
+        >
+          Background packs
+        </a>
+        <a
+          href="/posts"
+          class="rounded-xl border border-zinc-700 px-4 py-2 font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white"
+        >
+          Production notes
+        </a>
+      </div>
+    </article>
   </section>
 </BaseLayout>
