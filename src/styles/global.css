@@ -6,12 +6,35 @@
 
 :root {
   color-scheme: dark;
+  --color-cyan-200: #b7e1ff;
+  --color-cyan-300: #90d1ff;
+  --color-cyan-400: #48b2ff;
+  --color-cyan-500: #2f9bea;
+  --brand-violet: #7a5cff;
+}
+
+html {
+  scrollbar-gutter: stable;
 }
 
 body {
   @apply bg-zinc-950 text-zinc-100 antialiased;
+  overflow-x: hidden;
+}
+
+.page-container {
+  @apply mx-auto w-full max-w-6xl px-6;
 }
 
 a {
   @apply transition;
+}
+
+.btn-primary-brand {
+  background-image: linear-gradient(90deg, #48b2ff 0%, #48b2ff 78%, #7a5cff 100%);
+}
+
+.btn-primary-brand:hover {
+  background-image: linear-gradient(90deg, #60beff 0%, #60beff 78%, #8b72ff 100%);
+  box-shadow: 0 0 0 1px rgba(144, 209, 255, 0.35), 0 10px 28px rgba(72, 178, 255, 0.25);
 }

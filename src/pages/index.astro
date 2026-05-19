@@ -1,97 +1,155 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("posts"))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+const labs = (await getCollection("labs")).sort(
+  (a, b) =>
+    (b.data.releaseDate?.getTime() ?? 0) - (a.data.releaseDate?.getTime() ?? 0)
+);
+const downloads = (await getCollection("downloads")).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const latestPost = posts[0];
+const latestLab = labs[0];
+const latestPack = downloads.find((item) => item.data.kind === "music-pack");
+const latestTool = downloads.find((item) => item.data.kind === "tool");
+
+const newsItems = [
+  latestPost && {
+    type: "Post",
+    title: latestPost.data.title,
+    note: latestPost.data.description,
+    href: `/posts/${latestPost.id}`,
+    date: latestPost.data.pubDate.toLocaleDateString("cs-CZ"),
+  },
+  latestLab && {
+    type: "Music Lab",
+    title: latestLab.data.title,
+    note: "New lab update published.",
+    href: `/music/${latestLab.id}`,
+    date: latestLab.data.releaseDate?.toLocaleDateString("cs-CZ") ?? "Latest",
+  },
+  latestPack && {
+    type: "Pack",
+    title: latestPack.data.title,
+    note: "Background music pack available now.",
+    href: latestPack.data.href,
+    date: "Latest",
+    external: latestPack.data.external,
+  },
+  latestTool && {
+    type: "Tool",
+    title: latestTool.data.title,
+    note: "Development tool update in progress.",
+    href: "/downloads",
+    date: "Latest",
+  },
+].filter(Boolean);
 ---
 
 <BaseLayout
   title="DaVisco Entertainment"
   description="DaVisco Entertainment combines active software development with AI-driven music production."
 >
-  <section class="py-16">
+  <section class="grid gap-8 pt-6 pb-10 md:grid-cols-[1.3fr_0.7fr] md:items-start">
+    <div>
+      <p class="mb-4 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
+        Development + AI Music
+      </p>
+
+      <h1 class="max-w-4xl text-5xl font-bold tracking-tight text-white md:text-7xl">
+        Development Systems and AI-Driven Music.
+      </h1>
+
+      <p class="mt-6 max-w-3xl text-lg leading-8 text-zinc-400">
+        I build apps and production tools, while also releasing creator-focused
+        background music packs and AI music experiments under one creative
+        system.
+      </p>
+
+      <div class="mt-7 flex flex-wrap gap-3">
+        <a
+          href="/projects"
+          class="btn-primary-brand rounded-xl px-4 py-2 font-semibold text-zinc-950 hover:text-zinc-950"
+        >
+          Explore Development
+        </a>
+        <a
+          href="/music"
+          class="rounded-xl border border-zinc-700 px-4 py-2 font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white"
+        >
+          Explore AI Music
+        </a>
+      </div>
+    </div>
+
+    <aside class="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6">
+      <p class="text-xs uppercase tracking-[0.25em] text-cyan-400">About</p>
+      <h2 class="mt-2 text-2xl font-semibold text-white">About the Creator</h2>
+      <p class="mt-3 text-zinc-400">
+        I build both sides of this system: practical development tools and
+        AI-assisted music workflows for creators.
+      </p>
+      <a
+        href="/contact"
+        class="mt-5 inline-block text-sm font-semibold text-cyan-300 hover:text-cyan-200"
+      >
+        More in Contact
+      </a>
+    </aside>
+  </section>
+
+  <section class="pb-8">
     <p class="mb-4 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
-      DaVisco Entertainment
+      What&apos;s New
     </p>
 
-    <h1 class="max-w-4xl text-5xl font-bold tracking-tight text-white md:text-7xl">
-      Two creative systems: development and AI music production.
-    </h1>
-
-    <p class="mt-6 max-w-3xl text-lg leading-8 text-zinc-400">
-      This site is split into two pillars. One is focused on software, games
-      and production-ready tools. The second is focused on AI-driven music,
-      including background packs, mixes and standalone tracks.
-    </p>
+    <div class="grid gap-5 md:grid-cols-2">
+      {newsItems.map((item) => (
+        <article class="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6">
+          <p class="text-xs uppercase tracking-[0.25em] text-cyan-400">
+            {item.type}
+          </p>
+          <h2 class="mt-2 text-2xl font-semibold text-white">{item.title}</h2>
+          <p class="mt-3 text-zinc-400">{item.note}</p>
+          <p class="mt-4 text-sm text-zinc-500">{item.date}</p>
+          <a
+            href={item.href}
+            target={item.external ? "_blank" : undefined}
+            rel={item.external ? "noreferrer" : undefined}
+            class="mt-4 inline-block text-sm font-semibold text-cyan-300 hover:text-cyan-200"
+          >
+            Open update
+          </a>
+        </article>
+      ))}
+    </div>
   </section>
 
   <section class="grid gap-6 pb-8 md:grid-cols-2">
     <article class="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-7">
-      <p class="text-xs uppercase tracking-[0.25em] text-cyan-400">
-        Development
-      </p>
-
-      <h2 class="mt-3 text-3xl font-bold text-white">
-        Projects in progress and dev tooling
-      </h2>
-
+      <h2 class="text-3xl font-bold text-white">Development</h2>
       <p class="mt-4 text-zinc-400">
-        Test apps and games in active development, including one downloadable
-        tool that is still evolving together with the production stack.
+        Active projects, practical tools, and production systems.
       </p>
-
       <div class="mt-6 flex flex-wrap gap-3">
-        <a
-          href="/projects"
-          class="rounded-xl bg-cyan-400 px-4 py-2 font-semibold text-zinc-950 hover:bg-cyan-300 hover:text-zinc-950"
-        >
-          Projects
-        </a>
-        <a
-          href="/downloads"
-          class="rounded-xl border border-zinc-700 px-4 py-2 font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white"
-        >
-          Dev Tool (Beta)
-        </a>
-        <a
-          href="/stack"
-          class="rounded-xl border border-zinc-700 px-4 py-2 font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white"
-        >
-          Tech stack
-        </a>
+        <a href="/projects" class="rounded-xl border border-zinc-700 px-4 py-2 font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white">Projects</a>
+        <a href="/downloads" class="rounded-xl border border-zinc-700 px-4 py-2 font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white">Tools</a>
       </div>
     </article>
 
     <article class="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-7">
-      <p class="text-xs uppercase tracking-[0.25em] text-cyan-400">
-        AI Music
-      </p>
-
-      <h2 class="mt-3 text-3xl font-bold text-white">
-        DaVisco Music Lab
-      </h2>
-
+      <h2 class="text-3xl font-bold text-white">AI Music</h2>
       <p class="mt-4 text-zinc-400">
-        AI music workflows in Suno, background packs for video creators, and
-        DaVisco Music split into mixes and standalone tracks.
+        DaVisco Music Lab, creator packs, mixes and standalone tracks.
       </p>
-
       <div class="mt-6 flex flex-wrap gap-3">
-        <a
-          href="/music"
-          class="rounded-xl bg-cyan-400 px-4 py-2 font-semibold text-zinc-950 hover:bg-cyan-300 hover:text-zinc-950"
-        >
-          Music Hub
-        </a>
-        <a
-          href="/downloads"
-          class="rounded-xl border border-zinc-700 px-4 py-2 font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white"
-        >
-          Background Packs
-        </a>
-        <a
-          href="/posts"
-          class="rounded-xl border border-zinc-700 px-4 py-2 font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white"
-        >
-          Production Notes
-        </a>
+        <a href="/music" class="rounded-xl border border-zinc-700 px-4 py-2 font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white">Music Hub</a>
+        <a href="/downloads#music-packs" class="rounded-xl border border-zinc-700 px-4 py-2 font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white">Background Packs</a>
       </div>
     </article>
   </section>

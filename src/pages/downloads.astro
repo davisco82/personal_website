@@ -79,7 +79,7 @@ const musicPacks = downloadItems.filter((item) => item.data.kind === "music-pack
             href={pack.data.href}
             target={pack.data.external ? "_blank" : undefined}
             rel={pack.data.external ? "noreferrer" : undefined}
-            class="mt-5 inline-block rounded-lg bg-cyan-400 px-4 py-2 text-sm font-semibold text-zinc-950 hover:bg-cyan-300 hover:text-zinc-950"
+            class="btn-primary-brand mt-5 inline-block rounded-lg px-4 py-2 text-sm font-semibold text-zinc-950 hover:text-zinc-950"
           >
             {pack.data.ctaLabel}
           </a>

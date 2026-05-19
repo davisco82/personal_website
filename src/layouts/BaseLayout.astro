@@ -29,12 +29,16 @@ const canonicalUrl = Astro.url;
   <body>
     <div class="min-h-screen">
       <header class="border-b border-zinc-800">
-        <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
-          <a href="/" class="text-lg font-bold text-white">
-            DaVisco Entertainment
+        <div class="page-container flex items-center justify-between py-2">
+          <a href="/" class="group relative inline-flex h-10 items-center overflow-visible">
+            <img
+              src="/images/logo_davisco_entertainment.webp"
+              alt="DaVisco Entertainment"
+              class="h-9 w-auto max-w-none origin-left transition duration-300 group-hover:scale-[1.05] group-hover:drop-shadow-[0_0_10px_rgba(34,211,238,0.3)]"
+            />
           </a>
 
-          <nav class="flex gap-5 text-sm text-zinc-400">
+          <nav class="flex gap-3 text-xs text-zinc-400">
             <a href="/projects">Development</a>
             <a href="/stack">Tech Stack</a>
             <a href="/music">AI Music</a>
@@ -44,7 +48,7 @@ const canonicalUrl = Astro.url;
         </div>
       </header>
 
-      <main class="mx-auto max-w-6xl px-6 py-12">
+      <main class="page-container py-12">
         <slot />
       </main>
     </div>

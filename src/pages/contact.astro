@@ -4,8 +4,96 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 <BaseLayout
   title="Contact | DaVisco Entertainment"
-  description="Contact DaVisco Entertainment for development and AI music collaboration."
+  description="Simple contact page with social links and a message form for DaVisco Entertainment."
 >
-  <h1>Contact</h1>
-  <p>For collaborations, project inquiries, and music licensing, reach out directly.</p>
+  <section>
+    <p class="mb-4 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
+      Contact
+    </p>
+    <h1 class="text-4xl font-bold text-white md:text-6xl">
+      Get in Touch
+    </h1>
+    <p class="mt-5 max-w-3xl text-lg leading-8 text-zinc-400">
+      Follow updates on social channels or leave a quick message.
+    </p>
+  </section>
+
+  <section class="mt-12 grid gap-6 md:grid-cols-2">
+    <article class="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6">
+      <p class="text-xs uppercase tracking-[0.25em] text-cyan-400">Social</p>
+      <h2 class="mt-3 text-2xl font-semibold text-white">
+        Social Channels
+      </h2>
+      <div class="mt-4 flex flex-wrap gap-3">
+        <a
+          href="https://www.youtube.com/@DaViscoBackgroundLab"
+          target="_blank"
+          rel="noreferrer"
+          class="rounded-lg border border-zinc-700 px-4 py-2 text-sm font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white"
+        >
+          YouTube
+        </a>
+        <a
+          href="/music"
+          class="rounded-lg border border-zinc-700 px-4 py-2 text-sm font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white"
+        >
+          Music Hub
+        </a>
+        <a
+          href="/posts"
+          class="rounded-lg border border-zinc-700 px-4 py-2 text-sm font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white"
+        >
+          Posts
+        </a>
+      </div>
+    </article>
+
+    <article class="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6">
+      <p class="text-xs uppercase tracking-[0.25em] text-cyan-400">Message</p>
+      <h2 class="mt-3 text-2xl font-semibold text-white">Leave a Message</h2>
+      <p class="mt-3 text-zinc-400">
+        This opens your email app with a prefilled message.
+      </p>
+
+      <form id="contact-form" class="mt-5 grid gap-3">
+        <input
+          id="contact-name"
+          type="text"
+          placeholder="Your name"
+          class="rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-zinc-100 placeholder-zinc-500 focus:border-cyan-500 focus:outline-none"
+        />
+        <input
+          id="contact-subject"
+          type="text"
+          placeholder="Subject"
+          class="rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-zinc-100 placeholder-zinc-500 focus:border-cyan-500 focus:outline-none"
+        />
+        <textarea
+          id="contact-message"
+          rows="5"
+          placeholder="Your message"
+          class="rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-zinc-100 placeholder-zinc-500 focus:border-cyan-500 focus:outline-none"
+        ></textarea>
+        <button
+          type="submit"
+          class="btn-primary-brand rounded-lg px-4 py-2 text-sm font-semibold text-zinc-950"
+        >
+          Send via Email
+        </button>
+      </form>
+    </article>
+  </section>
+
+  <script is:inline>
+    const form = document.getElementById("contact-form");
+    form?.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const name = document.getElementById("contact-name")?.value || "";
+      const subject = document.getElementById("contact-subject")?.value || "Message from website";
+      const message = document.getElementById("contact-message")?.value || "";
+      const body = `Name: ${name}\n\n${message}`;
+      const mailto = `mailto:contact@daviscoentertainment.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailto;
+    });
+  </script>
 </BaseLayout>
