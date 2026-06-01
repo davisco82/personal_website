@@ -51,6 +51,17 @@ const canonicalUrl = Astro.url;
       <main class="page-container py-12">
         <slot />
       </main>
+
+      <footer class="border-t border-zinc-800/80">
+        <div class="page-container flex flex-wrap items-center justify-between gap-3 py-5 text-sm text-zinc-400">
+          <p>© {new Date().getFullYear()} DaVisco Entertainment</p>
+          <div class="flex flex-wrap gap-3">
+            <a href="https://www.youtube.com/@DaViscoBackgroundLab" target="_blank" rel="noreferrer" class="hover:text-cyan-300">YouTube</a>
+            <a href="https://www.linkedin.com/in/david-volf-6a2b79120" target="_blank" rel="noreferrer" class="hover:text-cyan-300">LinkedIn</a>
+            <a href="/contact" class="hover:text-cyan-300">Contact</a>
+          </div>
+        </div>
+      </footer>
     </div>
   </body>
 </html>
