@@ -4,11 +4,21 @@ import ProjectCard from "../components/ProjectCard.astro";
 import { getCollection } from "astro:content";
 
 const projects = await getCollection("projects");
+const gameSlugs = ["football-legacy-2026", "real-world-hero"];
+const appToolSlugs = ["vibronyx", "tidytap"];
+
+const games = gameSlugs
+  .map((slug) => projects.find((project) => project.id === slug))
+  .filter(Boolean);
+const appsAndTools = appToolSlugs
+  .map((slug) => projects.find((project) => project.id === slug))
+  .filter(Boolean);
 ---
 
 <BaseLayout
   title="Development | DaVisco Entertainment"
   description="Active software projects, game systems, and production experiments by DaVisco Entertainment."
+  theme="dev"
 >
   <section>
     <p class="mb-4 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
@@ -25,8 +35,36 @@ const projects = await getCollection("projects");
     </p>
   </section>
 
-  <section class="mt-12 grid gap-6 md:grid-cols-2">
-    {projects.map((project) => (
+  <section class="mt-12">
+    <div class="mb-6 flex flex-wrap items-baseline justify-between gap-3">
+      <h2 class="text-3xl font-bold text-white">Games</h2>
+      <p class="text-sm font-medium text-amber-300">
+        Testing window: August/September 2026
+      </p>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-2">
+      {games.map((project) => (
+        <ProjectCard
+          slug={project.id}
+          title={project.data.title}
+          description={project.data.description}
+          status={project.data.status}
+          stack={project.data.stack}
+          links={project.data.links}
+        />
+      ))}
+    </div>
+  </section>
+
+  <section class="mt-12">
+    <div class="mb-6">
+      <h2 class="text-3xl font-bold text-white">Apps & Tools</h2>
+      <p class="mt-2 text-sm text-zinc-400">All projects are in Development phase.</p>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-2">
+      {appsAndTools.map((project) => (
       <ProjectCard
         slug={project.id}
         title={project.data.title}
@@ -35,6 +73,7 @@ const projects = await getCollection("projects");
         stack={project.data.stack}
         links={project.data.links}
       />
-    ))}
+      ))}
+    </div>
   </section>
 </BaseLayout>

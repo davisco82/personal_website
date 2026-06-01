@@ -5,9 +5,29 @@ const {
   title = "DaVisco Entertainment",
   description = "Personal website, projects, devlog and experiments.",
   ogType = "website",
+  theme = "neutral",
 } = Astro.props;
 
 const canonicalUrl = Astro.url;
+const pathname = Astro.url.pathname;
+
+const normalizePath = (path) => (path !== "/" && path.endsWith("/") ? path.slice(0, -1) : path);
+const currentPath = normalizePath(pathname);
+const isActive = (href) => {
+  const target = normalizePath(href);
+  return currentPath === target || currentPath.startsWith(`${target}/`);
+};
+
+const navLinkClass = (href, accent = "cyan") =>
+  `relative rounded-lg px-3 py-2 hover:bg-zinc-800/60 hover:text-white ${
+    isActive(href)
+      ? accent === "violet"
+        ? "text-violet-300 after:absolute after:left-3 after:right-3 after:bottom-1 after:h-px after:rounded-full after:bg-violet-300/80"
+        : "text-cyan-300 after:absolute after:left-3 after:right-3 after:bottom-1 after:h-px after:rounded-full after:bg-cyan-300/80"
+      : accent === "violet"
+        ? ""
+        : ""
+  }`;
 ---
 
 <html lang="cs">
@@ -26,7 +46,7 @@ const canonicalUrl = Astro.url;
     <title>{title}</title>
   </head>
   
-  <body>
+  <body class={`theme-${theme}`}>
     <div class="min-h-screen">
       <header class="sticky top-0 z-20 border-b border-zinc-800/80 bg-zinc-950/70 backdrop-blur">
         <div class="page-container flex items-center justify-between py-2">
@@ -39,11 +59,11 @@ const canonicalUrl = Astro.url;
           </a>
 
           <nav class="flex flex-wrap items-center gap-2 text-sm font-semibold text-zinc-200 md:text-base">
-            <a href="/projects/" class="rounded-lg px-3 py-2 hover:bg-zinc-800/80 hover:text-white hover:shadow-[0_0_0_1px_rgba(72,178,255,0.2)]">Development</a>
-            <a href="/stack" class="rounded-lg px-3 py-2 hover:bg-zinc-800/80 hover:text-white hover:shadow-[0_0_0_1px_rgba(72,178,255,0.2)]">Tech Stack</a>
-            <a href="/music/" class="rounded-lg px-3 py-2 hover:bg-zinc-800/80 hover:text-white hover:shadow-[0_0_0_1px_rgba(122,92,255,0.25)]">AI Music</a>
-            <a href="/posts/" class="rounded-lg px-3 py-2 hover:bg-zinc-800/80 hover:text-white hover:shadow-[0_0_0_1px_rgba(72,178,255,0.2)]">Posts</a>
-            <a href="/contact" class="rounded-lg px-3 py-2 hover:bg-zinc-800/80 hover:text-white hover:shadow-[0_0_0_1px_rgba(72,178,255,0.2)]">Contact</a>
+            <a href="/projects/" class={navLinkClass("/projects/")}>Development</a>
+            <a href="/music/" class={navLinkClass("/music/", "violet")}>Music</a>
+            <a href="/posts/" class={navLinkClass("/posts/")}>Posts</a>
+            <a href="/stack" class={navLinkClass("/stack")}>Tech Stack</a>
+            <a href="/contact" class={navLinkClass("/contact")}>Contact</a>
           </nav>
         </div>
       </header>
