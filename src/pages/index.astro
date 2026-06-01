@@ -18,80 +18,91 @@ const projectsInProgress = projects.slice(0, 4);
   title="DaVisco Entertainment"
   description="DaVisco Entertainment combines active software development with AI-driven music production."
 >
-  <section class="home-hero grid gap-8 pt-6 pb-10 md:grid-cols-[1.3fr_0.7fr] md:items-start">
+  <section class="home-hero grid gap-8 pt-6 pb-4 md:grid-cols-[1.3fr_0.7fr] md:items-start">
     <div class="fade-up">
-      <p class="mb-4 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
-        Development + AI Music
-      </p>
-
       <h1 class="max-w-4xl text-5xl font-bold tracking-tight text-white md:text-7xl">
         Build. Play. Ship. Soundtrack.
       </h1>
 
       <p class="mt-6 max-w-3xl text-lg leading-8 text-zinc-400">
-        I build apps and production tools, while also releasing creator-focused
-        background music packs and AI music experiments under one creative
-        system.
+        I build apps and production tools, then ship creator-focused
+        background music packs and AI music experiments in one system.
       </p>
 
-      <div class="mt-7 flex flex-wrap gap-3">
-        <a
-          href="/projects/"
-          class="btn-primary-brand rounded-xl px-4 py-2 font-semibold text-zinc-950 hover:text-zinc-950"
-        >
-          Explore Development
+      <div class="mt-10 grid gap-6 sm:grid-cols-2">
+        <a href="/projects/" class="energy-card border-l-4 border-cyan-300/70 pl-4">
+          <p class="text-xs uppercase tracking-[0.2em] text-cyan-300">Development</p>
+          <h2 class="mt-3 text-xl font-semibold text-white">Games & Apps</h2>
+          <p class="mt-3 text-sm leading-7 text-zinc-300">Active projects, experiments and tools in progress.</p>
         </a>
-        <a
-          href="/music/"
-          class="rounded-xl border border-zinc-700 px-4 py-2 font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white"
-        >
-          Explore AI Music
+        <a href="/music/" class="energy-card border-l-4 border-violet-300/70 pl-4">
+          <p class="text-xs uppercase tracking-[0.2em] text-violet-300">Music</p>
+          <h2 class="mt-3 text-xl font-semibold text-white">DaVisco Music</h2>
+          <p class="mt-3 text-sm leading-7 text-zinc-300">Lab updates, releases and creator-ready background packs.</p>
         </a>
       </div>
+
     </div>
 
-    <aside class="glass-card energy-card fade-up rounded-2xl p-6 [animation-delay:120ms]">
-      <p class="text-xs uppercase tracking-[0.25em] text-cyan-400">About</p>
-      <h2 class="mt-2 text-2xl font-semibold text-white">About the Creator</h2>
-      <p class="mt-3 text-zinc-400">
-        I build both sides of this system: practical development tools and
-        AI-assisted music workflows for creators.
-      </p>
-      <a
-        href="/contact"
-        class="mt-5 inline-block text-sm font-semibold text-cyan-300 hover:text-cyan-200"
-      >
-        More in Contact
-      </a>
+    <aside class="glass-card energy-card fade-up relative overflow-hidden rounded-2xl [animation-delay:120ms]">
+      <img
+        src="/images/davisco-anime_picture.png"
+        alt="DaVisco creator portrait"
+        class="absolute inset-0 h-full w-full object-cover object-center brightness-110 saturate-110"
+      />
+      <div class="absolute inset-0 bg-gradient-to-b from-zinc-950/15 via-zinc-950/40 to-zinc-950/84"></div>
+      <div class="relative z-10 flex min-h-[30rem] flex-col justify-end p-6">
+        <p class="text-xs uppercase tracking-[0.25em] text-cyan-300">About</p>
+        <h2 class="mt-2 text-2xl font-semibold text-white">About the Creator</h2>
+        <p class="mt-3 max-w-sm text-zinc-200/90">
+          I build both sides of this system: practical development tools and
+          AI-assisted music workflows for creators.
+        </p>
+        <a
+          href="/contact"
+          class="mt-5 inline-block text-sm font-semibold text-cyan-200 hover:text-cyan-100"
+        >
+          More in Contact
+        </a>
+      </div>
     </aside>
   </section>
 
-  <section class="pb-8 fade-up [animation-delay:160ms]">
-    <p class="mb-4 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
-      What&apos;s New
-    </p>
+  <section class="relative mt-3 overflow-hidden rounded-3xl border border-cyan-300/25 bg-gradient-to-br from-cyan-950/45 via-zinc-950/72 to-violet-950/42 p-5 pb-6 shadow-[0_28px_70px_rgba(2,8,22,0.62)] backdrop-blur-sm fade-up [animation-delay:160ms] md:mt-4 md:p-6">
+    <div class="pointer-events-none absolute -left-20 -top-16 h-56 w-56 rounded-full bg-cyan-400/20 blur-3xl"></div>
+    <div class="pointer-events-none absolute right-[-5rem] top-8 h-64 w-64 rounded-full bg-violet-500/20 blur-3xl"></div>
+    <div class="pointer-events-none absolute bottom-[-4rem] left-1/3 h-44 w-44 rounded-full bg-blue-500/15 blur-3xl"></div>
+    <div class="relative z-10">
+    <div class="mb-4 flex items-end justify-between gap-4">
+      <p class="text-sm font-medium uppercase tracking-[0.3em] text-cyan-300">
+        What&apos;s New
+      </p>
+      <span class="hidden rounded-full border border-cyan-300/35 bg-cyan-400/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-cyan-200 md:inline">New · 3 latest posts</span>
+    </div>
+    <div class="mb-4 h-px w-full bg-gradient-to-r from-cyan-200 via-violet-300/70 to-transparent"></div>
 
-    <div class="glass-card accent-dev rounded-2xl p-4 md:p-5">
-      <div class="grid gap-3 md:grid-cols-3">
-        {latestPosts.map((post) => (
-          <article class="rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
-            <p class="text-[11px] uppercase tracking-[0.2em] text-cyan-300">
-              {post.data.pubDate.toLocaleDateString("cs-CZ")}
-            </p>
-            <h2 class="mt-2 line-clamp-2 text-lg font-semibold leading-6 text-white">{post.data.title}</h2>
-            <p class="mt-2 line-clamp-3 text-sm text-zinc-400">{post.data.description}</p>
-            <a
-              href={`/posts/${post.id}/`}
-              class="mt-3 inline-block text-sm font-semibold text-cyan-300 hover:text-cyan-200"
-            >
-              Read post
-            </a>
-          </article>
-        ))}
-      </div>
-      <a href="/posts/" class="btn-primary-brand mt-4 inline-block rounded-xl px-4 py-2 text-sm font-semibold text-zinc-950 hover:text-zinc-950">
-        Zobrazit více
+    <div class="grid gap-3 md:grid-cols-3">
+      {latestPosts.map((post) => (
+        <article class="rounded-xl border border-zinc-800/55 bg-zinc-900/28 p-3 transition duration-200 hover:-translate-y-0.5 hover:border-cyan-300/35 hover:shadow-[0_10px_24px_rgba(34,211,238,0.10)]">
+          <p class="text-[11px] uppercase tracking-[0.2em] text-cyan-300">
+            {post.data.pubDate.toLocaleDateString("cs-CZ")}
+          </p>
+          <h2 class="mt-2 line-clamp-2 text-lg font-semibold leading-6 text-white">{post.data.title}</h2>
+          <p class="mt-2 line-clamp-2 text-sm text-zinc-400">{post.data.description}</p>
+          <a
+            href={`/posts/${post.id}/`}
+            class="mt-2 inline-block text-sm font-semibold text-cyan-300 hover:text-cyan-200"
+          >
+            Read post
+          </a>
+        </article>
+      ))}
+    </div>
+    <div class="mt-4 text-center">
+      <a href="/posts/" class="inline-flex rounded-xl border border-zinc-700/80 px-4 py-2 text-sm font-medium text-zinc-300 hover:border-zinc-500 hover:text-white">
+        View more
       </a>
+    </div>
     </div>
   </section>
 
