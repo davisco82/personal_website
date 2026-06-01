@@ -48,7 +48,7 @@ const getReadingTime = (content: string) => {
           {formatDate(post.data.pubDate)} • {getReadingTime(post.body)} min read
         </p>
         <h2 class="mt-2 text-2xl font-semibold text-white">
-          <a href={`/posts/${post.id}`} class="hover:text-cyan-300">
+          <a href={`/posts/${post.id}/`} class="hover:text-cyan-300">
             {post.data.title}
           </a>
         </h2>

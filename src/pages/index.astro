@@ -5,64 +5,27 @@ import { getCollection } from "astro:content";
 const posts = (await getCollection("posts"))
   .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
-const labs = (await getCollection("labs")).sort(
-  (a, b) =>
-    (b.data.releaseDate?.getTime() ?? 0) - (a.data.releaseDate?.getTime() ?? 0)
-);
 const downloads = (await getCollection("downloads")).sort(
   (a, b) => a.data.order - b.data.order
 );
-
-const latestPost = posts[0];
-const latestLab = labs[0];
-const latestPack = downloads.find((item) => item.data.kind === "music-pack");
-const latestTool = downloads.find((item) => item.data.kind === "tool");
-
-const newsItems = [
-  latestPost && {
-    type: "Post",
-    title: latestPost.data.title,
-    note: latestPost.data.description,
-    href: `/posts/${latestPost.id}`,
-    date: latestPost.data.pubDate.toLocaleDateString("cs-CZ"),
-  },
-  latestLab && {
-    type: "Music Lab",
-    title: latestLab.data.title,
-    note: "New lab update published.",
-    href: `/music/${latestLab.id}`,
-    date: latestLab.data.releaseDate?.toLocaleDateString("cs-CZ") ?? "Latest",
-  },
-  latestPack && {
-    type: "Pack",
-    title: latestPack.data.title,
-    note: "Background music pack available now.",
-    href: latestPack.data.href,
-    date: "Latest",
-    external: latestPack.data.external,
-  },
-  latestTool && {
-    type: "Tool",
-    title: latestTool.data.title,
-    note: "Development tool update in progress.",
-    href: "/downloads",
-    date: "Latest",
-  },
-].filter(Boolean);
+const projects = await getCollection("projects");
+const latestPosts = posts.slice(0, 3);
+const toolsInProgress = downloads.filter((item) => item.data.kind === "tool").slice(0, 4);
+const projectsInProgress = projects.slice(0, 4);
 ---
 
 <BaseLayout
   title="DaVisco Entertainment"
   description="DaVisco Entertainment combines active software development with AI-driven music production."
 >
-  <section class="grid gap-8 pt-6 pb-10 md:grid-cols-[1.3fr_0.7fr] md:items-start">
-    <div>
+  <section class="home-hero grid gap-8 pt-6 pb-10 md:grid-cols-[1.3fr_0.7fr] md:items-start">
+    <div class="fade-up">
       <p class="mb-4 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
         Development + AI Music
       </p>
 
       <h1 class="max-w-4xl text-5xl font-bold tracking-tight text-white md:text-7xl">
-        Development Systems and AI-Driven Music.
+        Build. Play. Ship. Soundtrack.
       </h1>
 
       <p class="mt-6 max-w-3xl text-lg leading-8 text-zinc-400">
@@ -73,13 +36,13 @@ const newsItems = [
 
       <div class="mt-7 flex flex-wrap gap-3">
         <a
-          href="/projects"
+          href="/projects/"
           class="btn-primary-brand rounded-xl px-4 py-2 font-semibold text-zinc-950 hover:text-zinc-950"
         >
           Explore Development
         </a>
         <a
-          href="/music"
+          href="/music/"
           class="rounded-xl border border-zinc-700 px-4 py-2 font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white"
         >
           Explore AI Music
@@ -87,7 +50,7 @@ const newsItems = [
       </div>
     </div>
 
-    <aside class="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6">
+    <aside class="glass-card energy-card fade-up rounded-2xl p-6 [animation-delay:120ms]">
       <p class="text-xs uppercase tracking-[0.25em] text-cyan-400">About</p>
       <h2 class="mt-2 text-2xl font-semibold text-white">About the Creator</h2>
       <p class="mt-3 text-zinc-400">
@@ -103,54 +66,91 @@ const newsItems = [
     </aside>
   </section>
 
-  <section class="pb-8">
+  <section class="pb-8 fade-up [animation-delay:160ms]">
     <p class="mb-4 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
       What&apos;s New
     </p>
 
-    <div class="grid gap-5 md:grid-cols-2">
-      {newsItems.map((item) => (
-        <article class="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6">
-          <p class="text-xs uppercase tracking-[0.25em] text-cyan-400">
-            {item.type}
-          </p>
-          <h2 class="mt-2 text-2xl font-semibold text-white">{item.title}</h2>
-          <p class="mt-3 text-zinc-400">{item.note}</p>
-          <p class="mt-4 text-sm text-zinc-500">{item.date}</p>
-          <a
-            href={item.href}
-            target={item.external ? "_blank" : undefined}
-            rel={item.external ? "noreferrer" : undefined}
-            class="mt-4 inline-block text-sm font-semibold text-cyan-300 hover:text-cyan-200"
-          >
-            Open update
-          </a>
-        </article>
-      ))}
+    <div class="glass-card accent-dev rounded-2xl p-4 md:p-5">
+      <div class="grid gap-3 md:grid-cols-3">
+        {latestPosts.map((post) => (
+          <article class="rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
+            <p class="text-[11px] uppercase tracking-[0.2em] text-cyan-300">
+              {post.data.pubDate.toLocaleDateString("cs-CZ")}
+            </p>
+            <h2 class="mt-2 line-clamp-2 text-lg font-semibold leading-6 text-white">{post.data.title}</h2>
+            <p class="mt-2 line-clamp-3 text-sm text-zinc-400">{post.data.description}</p>
+            <a
+              href={`/posts/${post.id}/`}
+              class="mt-3 inline-block text-sm font-semibold text-cyan-300 hover:text-cyan-200"
+            >
+              Read post
+            </a>
+          </article>
+        ))}
+      </div>
+      <a href="/posts/" class="btn-primary-brand mt-4 inline-block rounded-xl px-4 py-2 text-sm font-semibold text-zinc-950 hover:text-zinc-950">
+        Zobrazit více
+      </a>
     </div>
   </section>
 
-  <section class="grid gap-6 pb-8 md:grid-cols-2">
-    <article class="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-7">
-      <h2 class="text-3xl font-bold text-white">Development</h2>
-      <p class="mt-4 text-zinc-400">
-        Active projects, practical tools, and production systems.
+  <section class="pb-8 fade-up [animation-delay:190ms]">
+    <p class="mb-4 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
+      DaVisco Music
+    </p>
+    <article class="feature-surface energy-card accent-music rounded-2xl border p-7">
+      <h2 class="text-3xl font-bold text-white">AI music hub for creators</h2>
+      <p class="mt-3 max-w-3xl text-zinc-300">
+        Music Lab updates, background packs and release previews in one clean flow.
       </p>
       <div class="mt-6 flex flex-wrap gap-3">
-        <a href="/projects" class="rounded-xl border border-zinc-700 px-4 py-2 font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white">Projects</a>
-        <a href="/downloads" class="rounded-xl border border-zinc-700 px-4 py-2 font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white">Tools</a>
+        <a href="/music/" class="rounded-xl border border-violet-300/40 px-4 py-2 text-sm font-semibold text-violet-100 hover:border-violet-200 hover:text-white">
+          Open Music Hub
+        </a>
+        <a href="/downloads#music-packs" class="rounded-xl border border-zinc-700 px-4 py-2 text-sm font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white">
+          Background Packs
+        </a>
       </div>
     </article>
+  </section>
 
-    <article class="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-7">
-      <h2 class="text-3xl font-bold text-white">AI Music</h2>
-      <p class="mt-4 text-zinc-400">
-        DaVisco Music Lab, creator packs, mixes and standalone tracks.
-      </p>
-      <div class="mt-6 flex flex-wrap gap-3">
-        <a href="/music" class="rounded-xl border border-zinc-700 px-4 py-2 font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white">Music Hub</a>
-        <a href="/downloads#music-packs" class="rounded-xl border border-zinc-700 px-4 py-2 font-semibold text-zinc-200 hover:border-zinc-500 hover:text-white">Background Packs</a>
-      </div>
-    </article>
+  <section class="pb-8 fade-up [animation-delay:220ms]">
+    <p class="mb-4 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
+      Tools & Apps
+    </p>
+    <div class="grid gap-6 md:grid-cols-2">
+      <article class="glass-card energy-card accent-dev rounded-2xl p-7">
+        <h2 class="text-3xl font-bold text-white">Games & Apps in Progress</h2>
+        <ul class="mt-5 space-y-4">
+          {projectsInProgress.map((project) => (
+            <li class="rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
+              <p class="text-sm text-zinc-500">{project.data.status}</p>
+              <h3 class="mt-1 text-lg font-semibold text-white">{project.data.title}</h3>
+              <p class="mt-2 text-sm text-zinc-400">{project.data.description}</p>
+            </li>
+          ))}
+        </ul>
+        <a href="/projects/" class="mt-5 inline-block text-sm font-semibold text-cyan-300 hover:text-cyan-200">
+          Open all projects
+        </a>
+      </article>
+
+      <article class="glass-card energy-card accent-dev rounded-2xl p-7">
+        <h2 class="text-3xl font-bold text-white">Tools in Development</h2>
+        <ul class="mt-5 space-y-4">
+          {toolsInProgress.map((tool) => (
+            <li class="rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
+              <h3 class="text-lg font-semibold text-white">{tool.data.title}</h3>
+              <p class="mt-2 text-sm text-zinc-400">{tool.data.description}</p>
+              <p class="mt-2 text-xs uppercase tracking-[0.2em] text-zinc-500">Version {tool.data.version ?? "TBD"}</p>
+            </li>
+          ))}
+        </ul>
+        <a href="/downloads" class="mt-5 inline-block text-sm font-semibold text-cyan-300 hover:text-cyan-200">
+          Open tools page
+        </a>
+      </article>
+    </div>
   </section>
 </BaseLayout>
