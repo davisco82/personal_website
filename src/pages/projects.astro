@@ -13,6 +13,8 @@ const games = gameSlugs
 const appsAndTools = appToolSlugs
   .map((slug) => projects.find((project) => project.id === slug))
   .filter(Boolean);
+
+const totalProjects = games.length + appsAndTools.length;
 ---
 
 <BaseLayout
@@ -20,32 +22,63 @@ const appsAndTools = appToolSlugs
   description="Active software projects, game systems, and production experiments by DaVisco Entertainment."
   theme="dev"
 >
-  <section>
-    <p class="mb-4 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
-      Projects
-    </p>
-
-    <h1 class="text-4xl font-bold text-white md:text-6xl">
-      Apps, games and production systems.
-    </h1>
-
-    <p class="mt-5 max-w-2xl text-lg leading-8 text-zinc-400">
-      A collection of production projects, experiments and long-term systems
-      I am building.
-    </p>
-  </section>
-
-  <section class="mt-12">
-    <div class="mb-6 flex flex-wrap items-baseline justify-between gap-3">
-      <h2 class="text-3xl font-bold text-white">Games</h2>
-      <p class="text-sm font-medium text-amber-300">
-        Testing window: August/September 2026
-      </p>
+  <section class="mt-6">
+    <div class="projects-submenu" aria-label="Project sections">
+      <a href="#games" class="projects-submenu-link">Games</a>
+      <a href="#apps-tools" class="projects-submenu-link">Apps &amp; Tools</a>
     </div>
 
-    <div class="grid gap-6 md:grid-cols-2">
+    <div class="projects-hero mt-6">
+      <p class="text-xs uppercase tracking-[0.28em] text-cyan-300">Projects</p>
+      <h1 class="mt-4 text-4xl font-bold text-white md:text-6xl">
+        Apps, games and production systems.
+      </h1>
+      <p class="mt-5 max-w-3xl text-lg leading-8 text-zinc-400">
+        A structured overview of the active development side of DaVisco: long-running game
+        projects on one side and smaller apps or tools on the other.
+      </p>
+
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="#games" class="music-action-button music-action-button--cyan">
+          Jump to Games
+        </a>
+        <a href="#apps-tools" class="music-action-button music-action-button--violet">
+          Jump to Apps &amp; Tools
+        </a>
+      </div>
+
+      <div class="projects-stat-bubbles mt-8">
+        <div class="projects-stat-bubble">
+          <span class="projects-stat-bubble__label">Games</span>
+          <span class="projects-stat-bubble__value">{games.length}</span>
+        </div>
+        <div class="projects-stat-bubble">
+          <span class="projects-stat-bubble__label">Apps &amp; Tools</span>
+          <span class="projects-stat-bubble__value">{appsAndTools.length}</span>
+        </div>
+        <div class="projects-stat-bubble">
+          <span class="projects-stat-bubble__label">Active projects</span>
+          <span class="projects-stat-bubble__value">{totalProjects}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="games" class="projects-section-block mt-12 scroll-mt-28">
+    <div class="projects-section-head">
+      <div>
+        <h2 class="text-2xl font-semibold text-white md:text-3xl">Games</h2>
+        <p class="mt-2 text-sm text-zinc-400">
+          Larger game systems and release-driven projects with a clearer testing window.
+        </p>
+      </div>
+      <span class="projects-section-pill">Testing window: August/September 2026</span>
+    </div>
+
+    <div class="mt-6 grid gap-6 md:grid-cols-2">
       {games.map((project) => (
         <ProjectCard
+          tone="cyan"
           slug={project.id}
           title={project.data.title}
           description={project.data.description}
@@ -57,22 +90,28 @@ const appsAndTools = appToolSlugs
     </div>
   </section>
 
-  <section class="mt-12">
-    <div class="mb-6">
-      <h2 class="text-3xl font-bold text-white">Apps & Tools</h2>
-      <p class="mt-2 text-sm text-zinc-400">All projects are in Development phase.</p>
+  <section id="apps-tools" class="projects-section-block mt-6 scroll-mt-28">
+    <div class="projects-section-head">
+      <div>
+        <h2 class="text-2xl font-semibold text-white md:text-3xl">Apps &amp; Tools</h2>
+        <p class="mt-2 text-sm text-zinc-400">
+          Utilities, workflow apps, and smaller production tools in active development.
+        </p>
+      </div>
+      <span class="projects-section-pill projects-section-pill--violet">Development phase</span>
     </div>
 
-    <div class="grid gap-6 md:grid-cols-2">
+    <div class="mt-6 grid gap-6 md:grid-cols-2">
       {appsAndTools.map((project) => (
-      <ProjectCard
-        slug={project.id}
-        title={project.data.title}
-        description={project.data.description}
-        status={project.data.status}
-        stack={project.data.stack}
-        links={project.data.links}
-      />
+        <ProjectCard
+          tone="violet"
+          slug={project.id}
+          title={project.data.title}
+          description={project.data.description}
+          status={project.data.status}
+          stack={project.data.stack}
+          links={project.data.links}
+        />
       ))}
     </div>
   </section>
